@@ -1,56 +1,42 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-inquirer
-  .prompt([
-    {
-      type: 'input',
-      message: 'What is your GitHub username?',
-      name: 'username',
+const Employee = require("./lib/Employee");
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
+inquirer.prompt([{
+      // type: 'input',
+      message: "Enter team member's name",
+      name: "name"
     },
     {
-      type: 'input',
-      message: 'What is your email address?',
-      name: 'email',
+      type: "list",
+        message: "Select team member's role",
+        choices: 
+        ["Engineer",
+          "Intern",
+          "Manager"],
+        name: "role"
     },
     {
-      type: 'input',
-      message: "What is your project's name",
-      name: 'projectName',
+      message: "Enter team member's id",
+      name: "id",
     },
     {
-      type: 'input',
-      message: "Please write a short description of your project:",
-      name: 'projectDescription',
+      message: "Enter team member's email address",
+        name: "email"
     },
     {
-      type: 'list',
-      message: "What kind of license should your project have?",
-      choices: ["MIT License","GNU License","APACHE License"],
-      name: 'licence',
-    },
-    {
-      type: 'input',
-      message: "What command should be run to install dependencies?",
-      name: 'depend',
-    },
-    {
-      type: 'input',
-      message: "What command should be run to run tests?",
-      name: 'testCommand',
-    },
-      {
-        type: 'input',
-        message: "What does the user need to know about using the repo?",
-        name: 'needToknow',
-      },
-        {
-          type: 'input',
-          message: "What does the user need to know about contributing to the repo?",
-          name: 'repoContr',
-        },
-      
-  ])
+      type: "list",
+      message: "Would you like to add more team members?",
+      choices: 
+      ["yes",
+        "no"],
+        name: "moMembers"
+    }])
+
 
   .then((response) => {
     console.log(response)
@@ -65,39 +51,3 @@ inquirer
     
     }
   );
-function makeReadme(response){
-  return`
-  # ${response.projectName}
-  ##  Description
-   ${response.projectDescription}
-  ## Table of Contents\n
-  *[Insallation](#Insallation)\n 
-  *[Usage](#Usage)\n
-  *[License](#License)\n
-  *[Contributing](#Contributing)\n
-  *[Test](#Test)\n
-  *[Questions](#Questions)\n
-  
-  ## License
-   This project is licensed under the 
-   \n${response.licence}
-  ## Insallation
-   To install necessary dependencies run the following command: 
-   \n${response.depend}
-  ## Test
-   To run tests, run the following command: 
-   \n${response.testCommand}
-  ## Usage
-   Here are some steps for the user: 
-   \n${response.needToknow}
-  ## Contributing
-   ${response.repoContr}
-   
-  ## Questions
-  
-  If you have any questions or concern please email me at: 
-  ${response.email}
-  or find my work on github
-  [${response.username}](https://github.com/${response.username})
-  `
-}
