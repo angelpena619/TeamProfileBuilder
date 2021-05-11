@@ -36,18 +36,3 @@ inquirer.prompt([{
         "no"],
         name: "moMembers"
     }])
-
-
-  .then((response) => {
-    console.log(response)
-    
-    var readme = makeReadme(response)
-
-    fs.writeFile("README.md",readme,err => {
-      console.log(err)
-
-
-    })
-    
-    }
-  );
