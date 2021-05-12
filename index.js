@@ -37,6 +37,10 @@ inquirer.prompt([{
       name: "name"
     },
     {
+      message: "Enter github",
+      name: "github",
+    },
+    {
       type: "list",
         message: "Select team member's role",
         choices: 
