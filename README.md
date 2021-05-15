@@ -1,8 +1,9 @@
 
-  # Team Profile Generator
+  # Team Profile Builder
   ##  Description
    this will allow a user to add employees by role, and dynamiclly create an HTML page with employee information cards. 
 
+   
   ## Table of Contents
 
 
@@ -48,5 +49,3 @@ nothing to know
   angelpena619@gmail.com
   or find my work on github
   [angelpena619](https://github.com/angelpena619) 
-
-     ![](assets/readmess.jpg)

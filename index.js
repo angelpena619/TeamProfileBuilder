@@ -7,15 +7,7 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 const generateHTML = (answers) =>
-`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
+`
 <div class="col-6">
 <div class="card mx-auto mb-3" style="width: 18rem">
 <h5 class="card-header">${answers.name}<br /><br />Intern</h5>
@@ -26,9 +18,27 @@ const generateHTML = (answers) =>
 </ul>
 </div>
 </div>
-</div>
-</body>
-</html>`;
+ `;
+
+const htmlFrame = (employeeHtml) =>
+`
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>Document</title>
+    <nav class="navbar navbar-dark bg-dark mb-5">
+    <span class="navbar-brand mb-0 h1 w-100 text-center">Team Profile</span>
+</nav>
+  </head>
+  <body>
+  ${employeeHtml}
+
+  </body>
+</html>
+`;
 
 const newTeamMemberQuestions= [{
   // type: 'input',
@@ -71,30 +81,48 @@ const newTeamMemberQuestions= [{
 
 const addTeamMember = async ()=>{
   inquirer.prompt(newTeamMemberQuestions)
-  .then((answers) => {
-    console.log(answers);
-    if (answers.moMembers === "yes") {
-      teamMembers.push(answers);
-
-    return await  addTeamMember()
-    } else {
-      console.log(teamMembers);
+  .then((newEmployee) => {
+   
+    if (newEmployee.moMembers === "yes") {
+      teamMembers.push(newEmployee);
+      addTeamMember()
+    } else { 
+      teamMembers.push(newEmployee)
+      writeTeamMembers()
     }
     
   })
 }
 
+const writeTeamMembers = () =>{
+
+  var holdHtml = ""
+
+  for (i = 0; i < teamMembers.length; i++){
+    var currentTeamMember = teamMembers [i]
+    var htmlBucket = generateHTML (currentTeamMember)
+    holdHtml = holdHtml + htmlBucket
+    
+  }
+  const finalHtml = htmlFrame (holdHtml)
+
+  fs.writeFile('index.html', finalHtml,  (err) =>
+    err ? console.log(err) : console.log('Successfully created your team!')
+  );
+
+}
+
 var teamMembers = []
 addTeamMember()
-.then(()=>{
-  for (i = 0; i < teamMembers.length; i++){
-    var currentTeamMember = teamMembers [0]
-    var htmlBucket = generateHTML (currentTeamMember)
-     fs.appendFile('index.html', htmlBucket, (err) =>
-       err ? console.log(err) : console.log('Successfully created your team!')
-     );
-  }
-})
+// .then(()=>{
+//   for (i = 0; i < teamMembers.length; i++){
+//     var currentTeamMember = teamMembers [0]
+//     var htmlBucket = generateHTML (currentTeamMember)
+//      fs.appendFile('index.html', htmlBucket, (err) =>
+//        err ? console.log(err) : console.log('Successfully created your team!')
+//      );
+//   }
+// })
   // const htmlPageContent = generateHTML(answers);
 
   // fs.writeFile('index.html', htmlPageContent, (err) =>
