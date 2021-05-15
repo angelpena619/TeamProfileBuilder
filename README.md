@@ -1,8 +1,7 @@
 
   # Team Profile Builder
   ##  Description
-   
-    this will allow a user to add employees by role, and dynamiclly create an HTML page with employee information cards. 
+  this will allow a user to add employees by role, and dynamiclly create an HTML page with employee information cards. 
 
    
   ## Table of Contents
